@@ -182,13 +182,14 @@ header p {
 
 .rotator-wrapper {
   position: relative;
-  height: 460px;
+  transition: height 0.4s ease;
   z-index: 1;
 }
 
 .rotator {
   position: relative;
-  height: 100%;
+  min-height: 360px;
+  perspective: 1400px;
 }
 
 .jump-box {
@@ -203,14 +204,28 @@ header p {
   display: flex;
   flex-direction: column;
   opacity: 0;
-  transition: opacity 0.65s ease;
+  transform: translateY(30px) scale(0.9) translateZ(-180px);
+  transition: transform 0.7s ease, opacity 0.7s ease;
   overflow: hidden;
 }
 
 .jump-box.active {
+  position: relative; /* allows height growth */
   opacity: 1;
+  transform: translateY(-12px) scale(1) translateZ(0);
   z-index: 3;
-  overflow-y: auto;
+}
+
+.jump-box.prev {
+  opacity: 0.35;
+  transform: translateY(20px) scale(0.95) translateZ(-140px);
+  z-index: 2;
+}
+
+.jump-box.active.expanded {
+  box-shadow: 2px 20px 20px rgba(0,0,0,0.45);
+  border: 1px solid rgba(147,197,253,0.25);
+  outline: 1px solid rgba(147,197,253,0.25);
 }
 
 .jump-box h3 {
@@ -686,10 +701,6 @@ body.featured-open .players .arrow {
     gap: 90px;
   }
 
-  .rotator-wrapper {
-    height: 380px;
-  }
-
   .jump-box img {
     height: 280px;
   }
@@ -721,8 +732,8 @@ body.featured-open .players .arrow {
 	width: 220px;
   }
 
-  .rotator-wrapper {
-    height: 320px;
+  .rotator {
+    min-height: 300px;
   }
 
   .jump-box {
@@ -1719,6 +1730,7 @@ Known and verified jumps may be included without a clip.
 
 <script>
 document.querySelectorAll('[data-rotator]').forEach(rotator => {
+  const wrapper = rotator.closest('.rotator-wrapper');
   const boxes = [...rotator.querySelectorAll('.jump-box')];
   const left = rotator.querySelector('.control.left');
   const right = rotator.querySelector('.control.right');
@@ -1739,6 +1751,23 @@ function moveControlsToActive() {
     boxes[i].classList.add('active');
     index = i;
 	moveControlsToActive();
+    syncHeight();
+  }
+
+  function syncHeight() {
+    const active = boxes[index];
+    requestAnimationFrame(() => {
+      wrapper.style.height = active.offsetHeight + 'px';
+    });
+  }
+  
+  function bindLiveHeightUpdates(box) {
+	box.querySelectorAll('details').forEach(d => {
+		d.addEventListener('toggle', () => {
+		if (!box.classList.contains('active')) return;
+		syncHeight();
+		});
+	});
   }
 
   function next() { if (!locked) show((index + 1) % boxes.length); }
@@ -1766,6 +1795,7 @@ function moveControlsToActive() {
   right.onclick = next;
 
   boxes.forEach((box, boxIndex) => {
+    bindLiveHeightUpdates(box);
 	const details = box.querySelector('[data-expand]');
     if (!details) return;
 
@@ -1782,6 +1812,7 @@ function moveControlsToActive() {
 	  if (!details.open) {
 		stopVideos(details);
       }
+	  syncHeight();
       startTimer();
     });
   });
