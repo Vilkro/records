@@ -204,21 +204,20 @@ header p {
   display: flex;
   flex-direction: column;
   opacity: 0;
-  transform: translateY(30px) scale(0.9) translateZ(-180px);
-  transition: transform 0.7s ease, opacity 0.7s ease;
+  transform: none;
+  transition: opacity 1.5s ease;
   overflow: hidden;
 }
 
 .jump-box.active {
-  position: relative; /* allows height growth */
+  position: relative;
   opacity: 1;
-  transform: translateY(-12px) scale(1) translateZ(0);
+  transform: none;
   z-index: 3;
 }
 
 .jump-box.prev {
-  opacity: 0.35;
-  transform: translateY(20px) scale(0.95) translateZ(-140px);
+  opacity: 0;
   z-index: 2;
 }
 
@@ -483,31 +482,32 @@ header p {
 }
 
 .skill-s {
-  font-size: 22px;
+  font-size: 20px;
   text-align: center;
-  color: #f7d774;
+  color: #fbf33e;
 }
 
 .skill-a {
-  font-size: 22px;
+  font-size: 20px;
   text-align: center;
-  color: #a78bfa;
+  color: #33db68;
 }
 
 .skill-b {
   font-size: 20px;
   text-align: center;
-  color: #60a5fa;
+  color: #1baef3;
 }
 
 .skill-c {
-  font-size: 18px;
+  font-size: 20px;
   text-align: center;
-  color: #34d399;
+  color: #d946f0;
 }
 
 .skill {
   text-align: center;
+  color: #f2252f;
 }
 
 .name {
@@ -583,7 +583,7 @@ header p {
 /* 5) black brackets, deep-blue X */
 .clan.x.x-black-royal{
   --xL: #7d7d7d; --xR: #7d7d7d;
-  --xC: #215cff; --xGlow: rgba(29,78,216,0.38);
+  --xC: #215cff; --xGlow: rgba(129,178,216,0.58);
 }
 
 /* 6) green brackets, white X */
@@ -1299,7 +1299,7 @@ Known and verified jumps may be included without a clip.
 
 <details class="player">
   <summary class="player-grid">
-    <span class="name">Meteor<span class="clan x x-green-white"><span class="x-l">&lt;&lt;</span><span class="x-core">X</span><span class="x-r">&gt;&gt;</span></span><span class="clan rocketers">[Rocketers]</span></span>
+    <span class="name">Meteor<span class="clan x x-green-white"><span class="x-l">&lt;&lt;</span><span class="x-core">X</span><span class="x-r">&gt;&gt;</span></span></span>
     <span>54m NVL, 36m VLE, 40m NVL, 42m V.I.E.</span>
     <span class="skill-s">Tier 1</span>
     <span class="arroww">▾</span>
