@@ -13,8 +13,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-html { scrollbar-width: none; }
-html::-webkit-scrollbar { display: none; }
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(147,197,253,0.15) transparent;
+}
+
+/* Webkit (Chrome, Safari, Edge) */
+html::-webkit-scrollbar {
+  display: block;
+  width: 6px;
+}
+
+html::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: rgba(147,197,253,0.18);
+  border-radius: 3px;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: rgba(147,197,253,0.35);
+}
 
 #loader {
   position: fixed;
@@ -78,17 +99,68 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   color: #e5e7eb;
   background-color: #0b0e14;
-  background-image: url("background.webp");
+  background-image: url("background.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
 
+.nav {
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(11,14,20,0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(147,197,253,0.1);
+}
+
+.nav-inner {
+  max-width: 900px;
+  margin: auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #ffd8a3;
+  text-decoration: none;
+  text-shadow: 0 0 12px rgba(218,143,103,0.25);
+}
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+}
+
+.nav-links a {
+  color: #9ca3af;
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+  color: #e5e7eb;
+}
+
+.nav-links a.active {
+  color: #e5e7eb;
+  font-weight: 600;
+}
+
 .container {
   max-width: 1400px;
   margin: auto;
-  padding: 32px 24px 140px;
+  padding: 50px 24px 140px;
 }
 
 header {
@@ -195,8 +267,8 @@ header p {
 .jump-box {
   position: absolute;
   inset: 0;
-  background: rgba(30,30,31,0.88);
-  box-shadow: 2px 20px 20px rgba(0,0,0,0.45);
+  background: rgba(30,30,30,0.70);
+  box-shadow: 2px 10px 20px rgba(0,0,0,0.45);
   border: 1px solid rgba(147,197,253,0.25);
   outline: 1px solid rgba(147,197,253,0.25);
   border-radius: 18px;
@@ -214,6 +286,11 @@ header p {
   opacity: 1;
   transform: none;
   z-index: 3;
+  background: rgba(30,30,30,0.75);
+}
+
+.jump-box.active:hover {
+  background: rgba(30,30,30,0.9);
 }
 
 .jump-box.prev {
@@ -222,6 +299,7 @@ header p {
 }
 
 .jump-box.active.expanded {
+  background: rgba(30,30,30,0.9);
   box-shadow: 2px 20px 20px rgba(0,0,0,0.45);
   border: 1px solid rgba(147,197,253,0.25);
   outline: 1px solid rgba(147,197,253,0.25);
@@ -258,6 +336,16 @@ header p {
   height: 340px;
   object-fit: contain;
   margin-bottom: 12px;
+  -webkit-mask-image: radial-gradient(
+    ellipse 75% 70% at center,
+    black 40%,
+    transparent 90%
+  );
+  mask-image: radial-gradient(
+    ellipse 75% 70% at center,
+    black 40%,
+    transparent 90%
+  );
 }
 
 .box-jumps {
@@ -397,7 +485,7 @@ header p {
 }
 
 .player {
-  background: rgba(30,30,30,0.88);
+  background: rgba(30,30,30,0.75);
   box-shadow: 0 4px 16px rgba(0,0,0,0.25);
   outline: 1px solid rgba(147,197,253,0.25);
   border-radius: 10px;
@@ -410,7 +498,7 @@ header p {
   background: rgba(30,30,30,0.9);
 }
 
-.player[open]:hover {
+.player[open] {
   background: rgba(30,30,30,0.9);
 }
 
@@ -446,7 +534,7 @@ header p {
   content: "";
   position: absolute;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-57%);
   bottom: -12px;
   width: min(90vw, 900px);
   height: 2px;
@@ -482,24 +570,31 @@ header p {
 }
 
 .skill-s {
-  font-size: 20px;
+  font-size: 22px;
   text-align: center;
-  color: #fbf33e;
+  color: #FF0000;
+  opacity: 1.0;
 }
 
 .skill-a {
-  font-size: 20px;
+  font-size: 21px;
   text-align: center;
-  color: #33db68;
+  color: #f7aa36;
 }
 
 .skill-b {
   font-size: 20px;
   text-align: center;
-  color: #1baef3;
+  color: #33db68;
 }
 
 .skill-c {
+  font-size: 20px;
+  text-align: center;
+  color: #1baef3;
+}
+
+.skill-d {
   font-size: 20px;
   text-align: center;
   color: #d946f0;
@@ -507,7 +602,7 @@ header p {
 
 .skill {
   text-align: center;
-  color: #f2252f;
+  color: #9CA3AF;
 }
 
 .name {
@@ -695,6 +790,39 @@ body.featured-open .players .arrow {
   margin-bottom: 18px;
 }
 
+.has-replay > summary > .jump-title::after {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-left: 8px;
+  background-image: url("replay-icon.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.4;
+  vertical-align: middle;
+  transform: translateY(-4px);
+  flex-shrink: 0;
+}
+
+.has-replay > summary:hover > .jump-title::after {
+  opacity: 0.7;
+}
+
+.name .has-replays-icon {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-left: 6px;
+  background-image: url("replay-icon.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  vertical-align: middle;
+  opacity: 0.4;
+  transform: translateY(-2px);
+}
+
 @media (max-width: 1100px) {
   .categories {
     grid-template-columns: 1fr;
@@ -803,13 +931,24 @@ body.featured-open .players .arrow {
 
 <body>
 
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">SeriousSamJumps</a>
+    <div class="nav-links">
+      <a href="/serioussamjumps.page">Home</a>
+      <a href="/records" class="active">Records</a>
+      <a href="/analysis/">Analysis</a>
+    </div>
+  </div>
+</nav>
+
 <div class="container">
 
 <header>
 <h1 style="text-shadow: 5px 2px 5px black;">Serious Sam <span>Rocket Jumps</span> Collection</h1>
 <div class="header-divider"></div>
 <p>
-This page presents community jump records from <strong>Serious Sam Classic</strong> (TFE & TSE).
+This page presents <strong>Serious Sam</strong> community jump records from Classic TFE/TSE.
 We upload all the jumps with a demo or video recording at hand.
 Known and verified jumps may be included without a clip.
 </p>
@@ -835,14 +974,14 @@ Known and verified jumps may be included without a clip.
 
 <details open>
 <summary>37m VL by Dark</summary>
-<video controls src="videos/dark37vl.mp4"></video>
+<video controls preload="none" src="videos/dark37vl.mp4"></video>
 <div class="box-note">Notes:</div>
 <div class="box-note">- 3 rockets</div>
 <div class="box-note">- Step up <span class="sign step-up">−</span></div>
 </details>
 
 <details><summary>36m VL by Mask</summary>
-<video controls src="videos/mask36vl.mp4"></video>
+<video controls preload="none" src="videos/mask36vl.mp4"></video>
 <div class="box-note">Notes:</div>
 <div class="box-note">- 2 rockets</div>
 </details>
@@ -869,13 +1008,13 @@ Known and verified jumps may be included without a clip.
 
 <details open>
 <summary>38m VLE by Mask</summary>
-<video controls src="videos/mask38vle.mp4"></video>
+<video controls preload="none" src="videos/mask38vle.mp4"></video>
 <div class="box-note">Notes:</div>
 <div class="box-note">- 3 rockets</div>
 </details>
 
 <details><summary>36m VLE by Dark</summary>
-<video controls src="videos/dark36vle.mp4"></video>
+<video controls preload="none" src="videos/dark36vle.mp4"></video>
 <div class="box-note">Notes:</div>
 <div class="box-note">- 2 rockets</div>
 <div class="box-note">- 2 HP left <span class="sign hp2">+</span></div>
@@ -892,33 +1031,33 @@ Known and verified jumps may be included without a clip.
 
 <details open>
 <summary>41m NVL by Mask</summary>
-<video controls src="videos/mask41nvl.mp4"></video>
+<video controls preload="none" src="videos/mask41nvl.mp4"></video>
 <div class="box-note">Notes:</div>
 <div class="box-note">- 2 rockets</div>
 <div class="box-note">- 4 HP left <span class="sign hp4">+</span></div>
 </details>
 
 <details><summary>41m NVL by Dev</summary>
-<video controls src="videos/dev41nvl.mp4"></video>
+<video controls preload="none" src="videos/dev41nvl.mp4"></video>
 <div class="box-note">Notes:</div>
 <div class="box-note">- 2 rockets</div>
 <div class="box-note">- 3 HP left <span class="sign hp3">+</span></div>
 </details>
 
 <details><summary>40m NVL by CHN</summary>
-<video controls src="videos/chn40nvl.mp4"></video>
+<video controls preload="none" src="videos/chn40nvl.mp4"></video>
 <div class="box-note">Notes:</div>
 <div class="box-note">- 2 rockets</div>
 </details>
 
 <details><summary>40m NVL by Dark</summary>
-<video controls src="videos/dark40nvl.mp4"></video>
+<video controls preload="none" src="videos/dark40nvl.mp4"></video>
 <div class="box-note">Notes:</div>
 <div class="box-note">- 2 rockets</div>
 </details>
 
 <details><summary>40m NVL by Vilkro</summary>
-<video controls src="videos/vilkro40nvl.mp4"></video>
+<video controls preload="none" src="videos/vilkro40nvl.mp4"></video>
 <div class="box-note">Notes:</div>
 <div class="box-note">- 3 rockets</div>
 <div class="box-note">- 3 HP left <span class="sign hp3">+</span></div>
@@ -934,7 +1073,7 @@ Known and verified jumps may be included without a clip.
 
 <details open>
 <summary>36m VIE by Mask</summary>
-<video controls src="videos/mask36vie.mp4"></video>
+<video controls preload="none" src="videos/mask36vie.mp4"></video>
 <div class="box-note">Notes:</div>
 <div class="box-note">- King Style wall</div>
 <div class="box-note">- 2 rockets</div>
@@ -943,7 +1082,7 @@ Known and verified jumps may be included without a clip.
 </details>
 
 <details><summary>35m VIE by Mask</summary>
-<video controls src="videos/mask35vie.mp4"></video>
+<video controls preload="none" src="videos/mask35vie.mp4"></video>
 <div class="box-note">Step up <span class="sign step-up">−</span></div>
 </details>
 
@@ -965,14 +1104,14 @@ Known and verified jumps may be included without a clip.
 
 <details open>
 <summary>38m SVL by Mask</summary>
-<video controls src="videos/mask38svl.mp4"></video>
+<video controls preload="none" src="videos/mask38svl.mp4"></video>
 <div class="box-note">Notes:</div>
 <div class="box-note">- 2 rockets</div>
 <div class="box-note">- Step up <span class="sign step-up">−</span></div>
 </details>
 
 <details><summary>37m SVL by Dark</summary>
-<video controls src="videos/dark37svl.mp4"></video>
+<video controls preload="none" src="videos/dark37svl.mp4"></video>
 <div class="box-note">Notes:</div>
 <div class="box-note">- 3 rockets</div>
 <div class="box-note">- 2 HP left <span class="sign hp2">+</span></div>
@@ -1002,27 +1141,27 @@ Known and verified jumps may be included without a clip.
 
 <details open>
 <summary>56m VL by Sandy</summary>
-<video controls src="videos/sandy56vl.mp4"></video>
+<video controls preload="none" src="videos/sandy56vl.mp4"></video>
 </details>
 
 <details><summary>56m VL by Dark</summary>
-<video controls src="videos/dark56vl.mp4"></video>
+<video controls preload="none" src="videos/dark56vl.mp4"></video>
 <div class="box-note">Notes:</div>
 <div class="box-note">- 2 HP left <span class="sign hp2">+</span></div>
 </details>
 
 <details><summary>56m VL by Dev</summary>
-<video controls src="videos/dev56vl.mp4"></video>
+<video controls preload="none" src="videos/dev56vl.mp4"></video>
 <div class="box-note">Notes:</div>
 <div class="box-note">- 2 HP left <span class="sign hp2">+</span></div>
 </details>
 
 <details><summary>56m VL by Vilkro</summary>
-<video controls src="videos/vilkro56vl.mp4"></video>
+<video controls preload="none" src="videos/vilkro56vl.mp4"></video>
 </details>
 
 <details><summary>53m VL by Mask</summary>
-<video controls src="videos/mask53vl.mp4"></video>
+<video controls preload="none" src="videos/mask53vl.mp4"></video>
 </details>
 
 </div>
@@ -1033,19 +1172,19 @@ Known and verified jumps may be included without a clip.
 
 <details open>
 <summary>57m VLE by Dark</summary>
-<video controls src="videos/dark57vle.mp4"></video>
+<video controls preload="none" src="videos/dark57vle.mp4"></video>
 <div class="box-note">Notes:</div>
 <div class="box-note">- 2 HP left <span class="sign hp2">+</span></div>
 </details>
 
 <details><summary>57m VLE by Vilkro</summary>
-<video controls src="videos/vilkro57vle.mp4"></video>
+<video controls preload="none" src="videos/vilkro57vle.mp4"></video>
 <div class="box-note">Notes:</div>
 <div class="box-note">- Step up <span class="sign step-up">−</span></div>
 </details>
 
 <details><summary>56m VLE by Dark</summary>
-<video controls src="videos/dark56vle.mp4"></video>
+<video controls preload="none" src="videos/dark56vle.mp4"></video>
 <div class="box-note">Notes:</div>
 <div class="box-note">- Karnak style</div>
 <div class="box-note">- 3 HP left <span class="sign hp3">+</span></div>
@@ -1053,7 +1192,7 @@ Known and verified jumps may be included without a clip.
 </details>
 
 <details><summary>56m VLE by Vilkro</summary>
-<video controls src="videos/vilkro56vle.mp4"></video>
+<video controls preload="none" src="videos/vilkro56vle.mp4"></video>
 <div class="box-note">Notes:</div>
 <div class="box-note">- 3 HP left <span class="sign hp3">+</span></div>
 </details>
@@ -1066,21 +1205,21 @@ Known and verified jumps may be included without a clip.
 
 <details open>
 <summary>58m NVL by Vilkro</summary>
-<video controls src="videos/vilkro58nvl.mp4"></video>
+<video controls preload="none" src="videos/vilkro58nvl.mp4"></video>
 </details>
 
 <details><summary>57m NVL by Dark</summary>
-<video controls src="videos/dark57nvl.mp4"></video>
+<video controls preload="none" src="videos/dark57nvl.mp4"></video>
 </details>
 
 <details><summary>56m NVL by Vilkro</summary>
-<video controls src="videos/vilkro56nvl.mp4"></video>
+<video controls preload="none" src="videos/vilkro56nvl.mp4"></video>
 <div class="box-note">Notes:</div>
 <div class="box-note">- 5 HP left <span class="sign hp4">+</span></div>
 </details>
 
 <details><summary>56m NVL by Vilkro</summary>
-<video controls src="videos/vilkro56nvl2.mp4"></video>
+<video controls preload="none" src="videos/vilkro56nvl2.mp4"></video>
 <div class="box-note">Notes:</div>
 <div class="box-note">- 2 rockets</div>
 </details>
@@ -1092,7 +1231,7 @@ Known and verified jumps may be included without a clip.
 
 <details open>
 <summary>44m V.I.E. by Dark</summary>
-<video controls src="videos/dark44vie.mp4"></video>
+<video controls preload="none" src="videos/dark44vie.mp4"></video>
 </details>
 
 <details><summary>44m V.I.E. by Sandy</summary>
@@ -1105,13 +1244,13 @@ Known and verified jumps may be included without a clip.
 
 <details open>
 <summary>56m NVL by CHN</summary>
-<video controls src="videos/chn56nvl.mp4"></video>
+<video controls preload="none" src="videos/chn56nvl.mp4"></video>
 <div class="box-note">Notes:</div>
 <div class="box-note">- 4 HP left <span class="sign hp4">+</span></div>
 </details>
 
 <details><summary>40m NVL by Dark</summary>
-<video controls src="videos/dark40grenade.mp4"></video>
+<video controls preload="none" src="videos/dark40grenade.mp4"></video>
 </details>
 </div>
 
@@ -1123,8 +1262,12 @@ Known and verified jumps may be included without a clip.
 
 <section class="players">
 <h1 style="text-align: center; text-shadow: 5px 2px 5px black;">Player Jump Records</h1>
+<header><p>
+Again, this includes records that we know. The players may have more jumps than listed here.<br>
+Skill distribution is subjective and may not be accurate.
+</p></header>
 <div class="player-header player-grid">
-  <span>Player name</span>
+  <span>Nickname</span>
   <span class="section-title">Best jumps</span>
   <span style="padding-left: 70px">Skill level</span>
   <span></span>
@@ -1132,7 +1275,7 @@ Known and verified jumps may be included without a clip.
 
 <details class="player">
   <summary class="player-grid">
-    <span class="name">Dark</span>
+    <span class="name">Dark </span>
     <span>56m VL, 57m VLE, 57m NVL, 37m VL</span>
     <span class="skill-s">Tier 1</span>
     <span class="arroww">▾</span>
@@ -1140,30 +1283,30 @@ Known and verified jumps may be included without a clip.
 <div class="player-details">
 <details class="player-jump">
 <summary>56m VL on Suburbs &lt&ltX&gt&gt</summary>
-<video controls src="videos/dark56vl.mp4"></video>
+<video controls preload="none" src="videos/dark56vl.mp4"></video>
 <div class="box-note">Notes: 2 HP left <span class="sign hp2">+</span></div>
 </details>
 
 <details class="player-jump">
 <summary>57m VLE on Hard-Jumps Training</summary>
-<video controls src="videos/dark57vle.mp4"></video>
+<video controls preload="none" src="videos/dark57vle.mp4"></video>
 <div class="box-note">Notes: 2 HP left <span class="sign hp2">+</span></div>
 </details>
 
 <details class="player-jump">
 <summary>37m VL on RJ-World</summary>
-<video controls src="videos/dark37vl.mp4"></video>
+<video controls preload="none" src="videos/dark37vl.mp4"></video>
 <div class="box-note">Notes: 3 rockets, step up <span class="sign step-up">−</span></div>
 </details>
 
 <details class="player-jump">
 <summary>Meteor's obelisk jump on Karnak</summary>
-<video controls src="videos/darksupermeteorjump.mp4"></video>
+<video controls preload="none" src="videos/darksupermeteorjump.mp4"></video>
 </details>
 
 <details class="player-jump">
 <summary>56m VLE on Karnak</summary>
-<video controls src="videos/dark56vle.mp4"></video>
+<video controls preload="none" src="videos/dark56vle.mp4"></video>
 <div class="box-note">Notes: 3 HP left <span class="sign hp3">+</span>, step up <span class="sign step-up">−</span></div>
 
 <details class="player-jump">
@@ -1182,7 +1325,7 @@ Known and verified jumps may be included without a clip.
 
 <details class="player">
   <summary class="player-grid">
-    <span class="name">Dev<span class="clan rocketers">[Rocketers]</span></span>
+    <span class="name">Devon<span class="clan rocketers">[Rocketers]</span></span>
     <span>56m VL, 37m VL, 34m V.I.E., 57m NVL</span>
     <span class="skill-s">Tier 1</span>
     <span class="arroww">▾</span>
@@ -1190,7 +1333,7 @@ Known and verified jumps may be included without a clip.
 <div class="player-details">
 <details class="player-jump">
 <summary>56m VL on Suburbs &lt&ltX&gt&gt</summary>
-<video controls src="videos/dev56vl.mp4"></video>
+<video controls preload="none" src="videos/dev56vl.mp4"></video>
 <div class="box-note">Notes: 2 HP left <span class="sign hp2">+</span></div>
 </details>
 
@@ -1220,7 +1363,7 @@ Known and verified jumps may be included without a clip.
 
 <details class="player-jump">
 <summary>41m NVL on Special Jumps</summary>
-<video controls src="videos/dev41nvl.mp4"></video>
+<video controls preload="none" src="videos/dev41nvl.mp4"></video>
 <div class="box-note">Notes: 3 HP left <span class="sign hp3">+</span></div>
 </details>
 
@@ -1231,7 +1374,7 @@ Known and verified jumps may be included without a clip.
 <details class="player">
   <summary class="player-grid">
     <span class="name">Gohan<span class="clan x x-black-royal"><span class="x-l">&lt;&lt;</span><span class="x-core">X</span><span class="x-r">&gt;&gt;</span></span></span>
-    <span>56m VLE</span>
+    <span>56m VLE, 36m VLE</span>
     <span class="skill-s">Tier 1</span>
     <span class="arroww">▾</span>
   </summary>
@@ -1242,7 +1385,7 @@ Known and verified jumps may be included without a clip.
 
 <details class="player">
   <summary class="player-grid">
-    <span class="name">Hyper Mask</span>
+    <span class="name">Hyper Mask </span>
     <span>38m VLE, 36m V.I.E., 36m VL, 53m VL</span>
     <span class="skill-s">Tier 1</span>
     <span class="arroww">▾</span>
@@ -1250,46 +1393,48 @@ Known and verified jumps may be included without a clip.
 <div class="player-details">
 <details class="player-jump">
 <summary>36m VL on RJ-World</summary>
-<video controls src="videos/mask36vl.mp4"></video>
+<video controls preload="none" src="videos/mask36vl.mp4"></video>
+<div class="box-note">Notes: 2 rockets</div>
 </details>
 
 <details class="player-jump">
 <summary>38m VLE on Special Jumps</summary>
-<video controls src="videos/mask38vle.mp4"></video>
+<video controls preload="none" src="videos/mask38vle.mp4"></video>
+<div class="box-note">Notes: 3 rockets</div>
 </details>
 
 <details class="player-jump">
 <summary>36m V.I.E. on Special Jumps</summary>
-<video controls src="videos/mask36vie.mp4"></video>
+<video controls preload="none" src="videos/mask36vie.mp4"></video>
 <div class="box-note">Notes: 2 HP left <span class="sign hp2">+</span>, step up <span class="sign step-up">−</span></div>
 </details>
 
 <details class="player-jump">
 <summary>41m NVL on Special Jumps</summary>
-<video controls src="videos/mask41nvl.mp4"></video>
+<video controls preload="none" src="videos/mask41nvl.mp4"></video>
 <div class="box-note">Notes: 4 HP left <span class="sign hp4">+</span></div>
 </details>
 
 <details class="player-jump">
 <summary>53m VL on The Elephant Atrium</summary>
-<video controls src="videos/mask53vl.mp4"></video>
+<video controls preload="none" src="videos/mask53vl.mp4"></video>
 </details>
 
 <details class="player-jump">
 <summary>60m VL on Courtyards of Gilgamesh</summary>
-<video controls src="videos/mask60vl.mp4"></video>
+<video controls preload="none" src="videos/mask60vl.mp4"></video>
 <div class="box-note">Notes: 150 health, collision bug</div>
 </details>
 
 <details class="player-jump">
 <summary>35m V.I.E. on Special Jumps</summary>
-<video controls src="videos/mask35vie.mp4"></video>
+<video controls preload="none" src="videos/mask35vie.mp4"></video>
 <div class="box-note">Notes: King Style wall</div>
 </details>
 
 <details class="player-jump">
 <summary>34m V.I.E. on RJ-World</summary>
-<video controls src="videos/mask34vie.mp4"></video>
+<video controls preload="none" src="videos/mask34vie.mp4"></video>
 <div class="box-note">Notes: God Style wall, step up <span class="sign step-up">−</span></div>
 </details>
 
@@ -1308,17 +1453,17 @@ Known and verified jumps may be included without a clip.
 
 <details class="player-jump">
 <summary>40m VL on The Elephant Atrium</summary>
-<video controls src="videos/meteor40vl.mp4"></video>
+<video controls preload="none" src="videos/meteor40vl.mp4"></video>
 </details>
 
 <details class="player-jump">
 <summary>42m V.I.E. on Courtyards of Gilgamesh</summary>
-<video controls src="videos/meteor42vie.mp4"></video>
+<video controls preload="none" src="videos/meteor42vie.mp4"></video>
 </details>
 
 <details class="player-jump">
 <summary>Trampolin jump on The Elephant Atrium</summary>
-<video controls src="videos/meteortrampolin.mp4"></video>
+<video controls preload="none" src="videos/meteortrampolin.mp4"></video>
 </details>
 
 <details class="player-jump">
@@ -1331,6 +1476,7 @@ Known and verified jumps may be included without a clip.
 
 <details class="player-jump">
 <summary>40m NVL on Karnak</summary>
+<div class="box-note">Notes: 3 rockets</div>
 </details>
 
 </div>
@@ -1340,14 +1486,14 @@ Known and verified jumps may be included without a clip.
 <details class="player">
   <summary class="player-grid">
     <span class="name">Sandy<span class="clan rocketers">[Rocketers]</span></span>
-    <span>56m VLE, 56m VLE, 56m NVL, 37m VL</span>
+    <span>56m VL, 56m VLE, 56m NVL, 37m VL</span>
     <span class="skill-s">Tier 1</span>
     <span class="arroww">▾</span>
   </summary>
 <div class="player-details">
 <details class="player-jump">
 <summary>56m VL on Suburbs &lt&ltX&gt&gt</summary>
-<video controls src="videos/sandy56vl.mp4"></video>
+<video controls preload="none" src="videos/sandy56vl.mp4"></video>
 </details>
 
 <details class="player-jump">
@@ -1385,7 +1531,7 @@ Known and verified jumps may be included without a clip.
 <div class="player-details">
 <details class="player-jump">
 <summary>56m NVL on Karnak</summary>
-<video controls src="videos/chn56nvl.mp4"></video>
+<video controls preload="none" src="videos/chn56nvl.mp4"></video>
 </details>
 
 <details class="player-jump">
@@ -1393,7 +1539,7 @@ Known and verified jumps may be included without a clip.
 </details>
 
 <details class="player-jump">
-<summary>48m VLE on idk</summary>
+<summary>48m VLE on Sacred Yards</summary>
 </details>
 
 <details class="player-jump">
@@ -1435,7 +1581,7 @@ Known and verified jumps may be included without a clip.
 
 <details class="player">
   <summary class="player-grid">
-    <span class="name">Vilkro</span>
+    <span class="name">Vilkro </span>
     <span>56m VL, 58m NVL, 57m VLE, 36m VL</span>
     <span class="skill-s">Tier 1</span>
     <span class="arroww">▾</span>
@@ -1443,29 +1589,35 @@ Known and verified jumps may be included without a clip.
 <div class="player-details">
 <details class="player-jump">
 <summary>56m VL on The Elephant Atrium</summary>
-<video controls src="videos/vilkro56vl.mp4"></video>
+<video controls preload="none" src="videos/vilkro56vl.mp4"></video>
 </details>
 
 <details class="player-jump">
 <summary>58m NVL on Special Jumps</summary>
-<video controls src="videos/vilkro58nvl.mp4"></video>
+<video controls preload="none" src="videos/vilkro58nvl.mp4"></video>
 </details>
 
 <details class="player-jump">
 <summary>57m VLE on Hard-Jumps Training</summary>
-<video controls src="videos/vilkro57vle.mp4"></video>
+<video controls preload="none" src="videos/vilkro57vle.mp4"></video>
 <div class="box-note">Notes: Step up <span class="sign step-up">−</span></div>
 </details>
 
 <details class="player-jump">
+<summary>54m NVL on Metropolis</summary>
+<video controls preload="none" src="videos/vilkro54nvl.mp4"></video>
+<div class="box-note">Notes: First person view</div>
+</details>
+
+<details class="player-jump">
 <summary>36m VL on RJ-World</summary>
-<video controls src="videos/vilkro36vl.mp4"></video>
+<video controls preload="none" src="videos/vilkro36vl.mp4"></video>
 <div class="box-note">Notes: Step up <span class="sign step-up">−</span></div>
 </details>
 
 <details class="player-jump">
 <summary>60m VL with Power Up</summary>
-<video controls src="videos/vilkro60vl.mp4"></video>
+<video controls preload="none" src="videos/vilkro60vl.mp4"></video>
 <div class="box-note">Notes: 200 health, 100 armor, Power up</div>
 </details>
 
@@ -1491,12 +1643,12 @@ Known and verified jumps may be included without a clip.
 
 <details class="player-jump">
 <summary>32m VL on </summary>
-<video controls src="videos/xray32vl.mp4"></video>
+<video controls preload="none" src="videos/xray32vl.mp4"></video>
 </details>
 
 <details class="player-jump">
 <summary>32m V.I.E. on Alley Of The Sphinxes</summary>
-<video controls src="videos/xray32vie.mp4"></video>
+<video controls preload="none" src="videos/xray32vie.mp4"></video>
 </details>
 
 <details class="player-jump">
@@ -1509,7 +1661,47 @@ Known and verified jumps may be included without a clip.
 
 <details class="player">
   <summary class="player-grid">
-    <span class="name">Supersniper98<span class="clan x" style="opacity: 0.6">X clan</span></span>
+    <span class="name">Matias<span class="clan x x-gray-blue"><span class="x-l">&lt;&lt;</span><span class="x-core">X</span><span class="x-r">&gt;&gt;</span></span></span>
+    <span>48m VLE, 34m VL </span>
+    <span class="skill-a">Tier 2</span>
+    <span class="arroww">▾</span>
+  </summary>
+<div class="player-details">
+<details class="player-jump">
+<summary>48m VLE on Sacred Yards</summary>
+</details>
+
+<details class="player-jump">
+<summary>34m VL on RJ-World</summary>
+</details>
+
+</div>
+</details>
+
+
+<details class="player">
+  <summary class="player-grid">
+    <span class="name">sNEEE<span class="clan x x-gray-blue"><span class="x-l">&lt;&lt;</span><span class="x-core">X</span><span class="x-r">&gt;&gt;</span></span></span>
+    <span>48m VLE, 34m VL </span>
+    <span class="skill-a">Tier 2</span>
+    <span class="arroww">▾</span>
+  </summary>
+<div class="player-details">
+<details class="player-jump">
+<summary>48m VLE on Sacred Yards</summary>
+</details>
+
+<details class="player-jump">
+<summary>34m VL on RJ-World</summary>
+</details>
+
+</div>
+</details>
+
+
+<details class="player">
+  <summary class="player-grid">
+    <span class="name">Supersniper98</span>
     <span>48m VL, 34m VL </span>
     <span class="skill-a">Tier 2</span>
     <span class="arroww">▾</span>
@@ -1517,11 +1709,11 @@ Known and verified jumps may be included without a clip.
 <div class="player-details">
 <details class="player-jump">
 <summary>48m VL on Courtyards Of Gilgamesh</summary>
-<video controls src="videos/sniper48vl.mp4"></video>
+<video controls preload="none" src="videos/sniper48vl.mp4"></video>
 </details>
 
 <details class="player-jump">
-<summary>34m VL on</summary>
+<summary>34m VL on RJ-World</summary>
 </details>
 
 </div>
@@ -1541,7 +1733,7 @@ Known and verified jumps may be included without a clip.
 </details>
 
 <details class="player-jump">
-<summary>34m VL</summary>
+<summary>34m VL on RJ-World</summary>
 </details>
 
 </div>
@@ -1550,9 +1742,99 @@ Known and verified jumps may be included without a clip.
 
 <details class="player" style="margin-top: 16px">
   <summary class="player-grid">
+    <span class="name">&lt;&lt;&lt;Fallen Lord&gt;&gt;&gt;<span class="clan x x-red-gray"><span class="x-l">&lt;&lt;</span><span class="x-core">X</span><span class="x-r">&gt;&gt;</span></span></span>
+    <span>32m V.I.E., 48m NVL</span>
+    <span class="skill-b">Tier 3</span>
+    <span class="arroww">▾</span>
+  </summary>
+<div class="player-details">
+<details class="player-jump">
+<summary>32m V.I.E. on Alley Of The Sphinxes</summary>
+</details>
+
+<details class="player-jump">
+<summary>48m NVL on Sacred Yards</summary>
+</details>
+
+</div>
+</details>
+
+
+<details class="player">
+  <summary class="player-grid">
+    <span class="name">Jazz<span class="clan x" style="opacity: 0.6">X clan</span></span>
+    <span>40m NVL</span>
+    <span class="skill-b">Tier 3</span>
+    <span class="arroww">▾</span>
+  </summary>
+<div class="player-details">
+<details class="player-jump">
+<summary>40m NVL on Karnak</summary>
+<div class="box-note">Notes: 3 rockets</div>
+</details>
+
+</div>
+</details>
+
+
+<details class="player">
+  <summary class="player-grid">
+    <span class="name">Sorin<span class="clan x x-red-gray"><span class="x-l">&lt;&lt;</span><span class="x-core">X</span><span class="x-r">&gt;&gt;</span></span></span>
+    <span>34m VL, 48m NVL</span>
+    <span class="skill-b">Tier 3</span>
+    <span class="arroww">▾</span>
+  </summary>
+<div class="player-details">
+<details class="player-jump">
+<summary>34m VL on RJ-World</summary>
+</details>
+
+<details class="player-jump">
+<summary>48m NVL on Sacred Yards</summary>
+</details>
+
+</div>
+</details>
+
+
+<details class="player">
+  <summary class="player-grid">
+    <span class="name">VASN<span class="clan x" style="opacity: 0.6">X clan</span></span>
+    <span>35m VL</span>
+    <span class="skill-b">Tier 3</span>
+    <span class="arroww">▾</span>
+  </summary>
+<div class="player-details">
+<details class="player-jump">
+<summary>35m VL on RJ-World</summary>
+</details>
+
+</div>
+</details>
+
+
+<details class="player" style="margin-top: 16px">
+  <summary class="player-grid">
+    <span class="name">Airoh<span class="clan x" style="opacity: 0.6">X clan</span></span>
+    <span>32m V.I.E.</span>
+    <span class="skill-c">Tier 4</span>
+    <span class="arroww">▾</span>
+  </summary>
+<div class="player-details">
+
+<details class="player-jump">
+<summary>32m V.I.E. on Alley Of The Sphinxes</summary>
+</details>
+
+</div>
+</details>
+
+
+<details class="player">
+  <summary class="player-grid">
     <span class="name">Alex<span class="clan rocketers">[Rocketers]</span></span>
     <span>32m V.I.E., 36m NVL</span>
-    <span class="skill-b">Tier 3</span>
+    <span class="skill-c">Tier 4</span>
     <span class="arroww">▾</span>
   </summary>
 <div class="player-details">
@@ -1564,24 +1846,24 @@ Known and verified jumps may be included without a clip.
   <summary class="player-grid">
     <span class="name">Chris<span class="clan rocketers">[Rocketers]</span></span>
     <span>32m VL, 32m V.I.E., 36m NVL</span>
-    <span class="skill-b">Tier 3</span>
+    <span class="skill-c">Tier 4</span>
     <span class="arroww">▾</span>
   </summary>
 <div class="player-details">
 
 <details class="player-jump">
 <summary>32m VL on Metropolis</summary>
-<video controls src="videos/chris32vl.mp4"></video>
+<video controls preload="none" src="videos/chris32vl.mp4"></video>
 </details>
 
 <details class="player-jump">
 <summary>32m V.I.E. on Alley Of The Sphinxes</summary>
-<video controls src="videos/chris32vie.mp4"></video>
+<video controls preload="none" src="videos/chris32vie.mp4"></video>
 </details>
 
 <details class="player-jump">
 <summary>36m NVL on Sacred Yards</summary>
-<video controls src="videos/chris36nvl.mp4"></video>
+<video controls preload="none" src="videos/chris36nvl.mp4"></video>
 </details>
 
 </div>
@@ -1592,20 +1874,37 @@ Known and verified jumps may be included without a clip.
   <summary class="player-grid">
     <span class="name">EL.RO<span class="clan rocketers">[Rocketers]</span></span>
     <span>32m V.I.E., 36m NVL</span>
-    <span class="skill-b">Tier 3</span>
+    <span class="skill-c">Tier 4</span>
     <span class="arroww">▾</span>
   </summary>
 <div class="player-details">
 
 <details class="player-jump">
 <summary>32m V.I.E. on Alley Of The Sphinxes</summary>
-<video controls src="videos/elro32vie.mp4"></video>
+<video controls preload="none" src="videos/elro32vie.mp4"></video>
 <div class="box-note">Notes: Step up <span class="sign step-up">−</span></div>
 </details>
 
 <details class="player-jump">
 <summary>36m NVL on Luxor</summary>
-<video controls src="videos/elro36nvi.mp4"></video>
+<video controls preload="none" src="videos/elro36nvi.mp4"></video>
+</details>
+
+</div>
+</details>
+
+
+<details class="player">
+  <summary class="player-grid">
+    <span class="name">Frank<span class="clan x" style="opacity: 0.6">X clan</span></span>
+    <span>34m VL</span>
+    <span class="skill-c">Tier 4</span>
+    <span class="arroww">▾</span>
+  </summary>
+<div class="player-details">
+
+<details class="player-jump">
+<summary>34m VL</summary>
 </details>
 
 </div>
@@ -1616,7 +1915,7 @@ Known and verified jumps may be included without a clip.
   <summary class="player-grid">
     <span class="name">Ostin Rozenberg</span>
     <span>32m VL?</span>
-    <span class="skill-b">Tier 3</span>
+    <span class="skill-c">Tier 4</span>
     <span class="arroww">▾</span>
   </summary>
 <div class="player-details">
@@ -1628,20 +1927,20 @@ Known and verified jumps may be included without a clip.
   <summary class="player-grid">
     <span class="name">Overlord<span class="clan x" style="opacity: 0.6">X clan</span></span>
     <span>33m VL, 32m V.I.E., 36m NVL</span>
-    <span class="skill-b">Tier 3</span>
+    <span class="skill-c">Tier 4</span>
     <span class="arroww">▾</span>
   </summary>
 <div class="player-details">
 
 <details class="player-jump">
 <summary>32m V.I.E. on Metropolis</summary>
-<video controls src="videos/overlord32king.mp4"></video>
+<video controls preload="none" src="videos/overlord32king.mp4"></video>
 <div class="box-note">Notes: Step up <span class="sign step-up">−</span></div>
 </details>
 
 <details class="player-jump">
 <summary>32m V.I.E. on Alley Of The Sphinxes</summary>
-<video controls src="videos/overlord32god.mp4"></video>
+<video controls preload="none" src="videos/overlord32god.mp4"></video>
 <div class="box-note">Notes: Step up <span class="sign step-up">−</span></div>
 </details>
 
@@ -1651,17 +1950,85 @@ Known and verified jumps may be included without a clip.
 
 <details class="player-jump">
 <summary>33m SVL on The Great Pyramid</summary>
-<video controls src="videos/overlord33svl.mp4"></video>
+<video controls preload="none" src="videos/overlord33svl.mp4"></video>
 </details>
 
 <details class="player-jump">
 <summary>32m VLE on Valley Of The Kings</summary>
-<video controls src="videos/overlord32vle.mp4"></video>
+<video controls preload="none" src="videos/overlord32vle.mp4"></video>
 </details>
 
 <details class="player-jump">
 <summary>36m NVL on Luxor</summary>
-<video controls src="videos/overlord36nvl.mp4"></video>
+<video controls preload="none" src="videos/overlord36nvl.mp4"></video>
+</details>
+
+</div>
+</details>
+
+
+<details class="player">
+  <summary class="player-grid">
+    <span class="name">Rico Rodriguez<span class="clan x" style="opacity: 0.6">X clan</span></span>
+    <span>32m VL</span>
+    <span class="skill-c">Tier 4</span>
+    <span class="arroww">▾</span>
+  </summary>
+<div class="player-details">
+
+<details class="player-jump">
+<summary>32m VL</summary>
+</details>
+
+</div>
+</details>
+
+
+<details class="player">
+  <summary class="player-grid">
+    <span class="name">Tigre de penjamo<span class="clan x" style="opacity: 0.6">X clan</span></span>
+    <span>32m VL</span>
+    <span class="skill-c">Tier 4</span>
+    <span class="arroww">▾</span>
+  </summary>
+<div class="player-details">
+
+<details class="player-jump">
+<summary>32m VL</summary>
+</details>
+
+</div>
+</details>
+
+
+<details class="player">
+  <summary class="player-grid">
+    <span class="name">Wind<span class="clan x" style="opacity: 0.6">X clan</span></span>
+    <span>33m VL</span>
+    <span class="skill-c">Tier 4</span>
+    <span class="arroww">▾</span>
+  </summary>
+<div class="player-details">
+
+<details class="player-jump">
+<summary>33m VL on RJ-World</summary>
+</details>
+
+</div>
+</details>
+
+
+<details class="player">
+  <summary class="player-grid">
+    <span class="name">Zeeman<span class="clan x" style="opacity: 0.6">X clan</span><span class="clan rocketers">[Rocketers]</span></span>
+    <span>32m V.I.E.</span>
+    <span class="skill-c">Tier 4</span>
+    <span class="arroww">▾</span>
+  </summary>
+<div class="player-details">
+
+<details class="player-jump">
+<summary>32m V.I.E. on Metropolis</summary>
 </details>
 
 </div>
@@ -1670,9 +2037,93 @@ Known and verified jumps may be included without a clip.
 
 <details class="player" style="margin-top: 16px">
   <summary class="player-grid">
+    <span class="name">Agent''T<span class="clan x" style="opacity: 0.6">X clan</span></span>
+    <span>30m VL</span>
+    <span class="skill-d">Tier 5</span>
+    <span class="arroww">▾</span>
+  </summary>
+<div class="player-details">
+</div>
+</details>
+
+
+<details class="player">
+  <summary class="player-grid">
+    <span class="name">Aki<span class="clan x" style="opacity: 0.6">X clan</span></span>
+    <span>28m VL</span>
+    <span class="skill-d">Tier 5</span>
+    <span class="arroww">▾</span>
+  </summary>
+<div class="player-details">
+</div>
+</details>
+
+
+<details class="player">
+  <summary class="player-grid">
     <span class="name">Carly<span class="clan x" style="opacity: 0.6">X clan</span></span>
     <span>36m NVL</span>
-    <span class="skill-c">Tier 4</span>
+    <span class="skill-d">Tier 5</span>
+    <span class="arroww">▾</span>
+  </summary>
+<div class="player-details">
+</div>
+</details>
+
+
+<details class="player">
+  <summary class="player-grid">
+    <span class="name">Elliot<span class="clan x" style="opacity: 0.6">X clan</span></span>
+    <span>28m VL</span>
+    <span class="skill-d">Tier 5</span>
+    <span class="arroww">▾</span>
+  </summary>
+<div class="player-details">
+</div>
+</details>
+
+
+<details class="player">
+  <summary class="player-grid">
+    <span class="name">Faku<span class="clan x" style="opacity: 0.6">X clan</span></span>
+    <span>28m VL</span>
+    <span class="skill-d">Tier 5</span>
+    <span class="arroww">▾</span>
+  </summary>
+<div class="player-details">
+</div>
+</details>
+
+
+<details class="player">
+  <summary class="player-grid">
+    <span class="name">FarFan<span class="clan x" style="opacity: 0.6">X clan</span></span>
+    <span>28m VL</span>
+    <span class="skill-d">Tier 5</span>
+    <span class="arroww">▾</span>
+  </summary>
+<div class="player-details">
+</div>
+</details>
+
+
+<details class="player">
+  <summary class="player-grid">
+    <span class="name">Frozen Sam<span class="clan x" style="opacity: 0.6">X clan</span></span>
+    <span>28m SVL</span>
+    <span class="skill-d">Tier 5</span>
+    <span class="arroww">▾</span>
+  </summary>
+<div class="player-details">
+</div>
+</details>
+
+
+<details class="player">
+  <summary class="player-grid">
+    <span class="name">Gasoseta<span class="clan x" style="opacity: 0.6">X clan</span></span>
+    <span>32m NVL</span>
+    <span class="skill-d">Tier 5</span>
     <span class="arroww">▾</span>
   </summary>
 <div class="player-details">
@@ -1684,7 +2135,43 @@ Known and verified jumps may be included without a clip.
   <summary class="player-grid">
     <span class="name">Mandy</span>
     <span>32m VLE</span>
-    <span class="skill-c">Tier 4</span>
+    <span class="skill-d">Tier 5</span>
+    <span class="arroww">▾</span>
+  </summary>
+<div class="player-details">
+</div>
+</details>
+
+
+<details class="player">
+  <summary class="player-grid">
+    <span class="name">Ratamahatta<span class="clan x" style="opacity: 0.6">X clan</span></span>
+    <span>36m NVL</span>
+    <span class="skill-d">Tier 5</span>
+    <span class="arroww">▾</span>
+  </summary>
+<div class="player-details">
+</div>
+</details>
+
+
+<details class="player">
+  <summary class="player-grid">
+    <span class="name">Serious Alexej<span class="clan x" style="opacity: 0.6">X clan</span></span>
+    <span>36m NVL</span>
+    <span class="skill-d">Tier 5</span>
+    <span class="arroww">▾</span>
+  </summary>
+<div class="player-details">
+</div>
+</details>
+
+
+<details class="player">
+  <summary class="player-grid">
+    <span class="name">Shooters_Hero<span class="clan x" style="opacity: 0.6">X clan</span></span>
+    <span>36m NVL</span>
+    <span class="skill-d">Tier 5</span>
     <span class="arroww">▾</span>
   </summary>
 <div class="player-details">
@@ -1696,7 +2183,7 @@ Known and verified jumps may be included without a clip.
   <summary class="player-grid">
     <span class="name">Stokrotka<span class="clan x" style="opacity: 0.6">X clan</span></span>
     <span>36m NVL</span>
-    <span class="skill-c">Tier 4</span>
+    <span class="skill-d">Tier 5</span>
     <span class="arroww">▾</span>
   </summary>
 <div class="player-details">
@@ -1707,7 +2194,19 @@ Known and verified jumps may be included without a clip.
 <details class="player" style="margin-top: 16px">
   <summary class="player-grid">
     <span class="name">IbrahimGamer</span>
-    <span>3</span>
+    <span></span>
+    <span class="skill">Unranked</span>
+    <span class="arroww">▾</span>
+  </summary>
+<div class="player-details">
+</div>
+</details>
+
+
+<details class="player">
+  <summary class="player-grid">
+    <span class="name">Emmanuel2K26</span>
+    <span></span>
     <span class="skill">Unranked</span>
     <span class="arroww">▾</span>
   </summary>
@@ -1722,9 +2221,11 @@ Known and verified jumps may be included without a clip.
 
 <footer class="site-footer">
   <div class="footer-inner">
-    <span>Serious Sam Rocket Jumps Collection</span>
+    <span>Serious Sam Rocket Jumping</span>
     <span class="footer-sep">•</span>
-    <span>Community Jump Records</span>
+    <span>by Vilkro</span>
+    <span class="footer-sep">•</span>
+    <span>thekodyz@gmail.com</span>
   </div>
 </footer>
 
@@ -1885,6 +2386,48 @@ window.addEventListener("load", () => {
   setTimeout(() => {
     loader.classList.add("hidden");
   }, 400);
+});
+
+document.querySelectorAll('.player-jump, .box-jumps').forEach(jump => {
+  jump.addEventListener('toggle', () => {
+    if (jump.open) {
+      jump.querySelectorAll('video[preload="none"]').forEach(v => {
+        v.preload = 'metadata';
+      });
+    }
+  });
+});
+</script>
+
+<script>
+document.querySelectorAll('.player-jump > summary, .box-jumps > details > summary').forEach(summary => {
+  if (summary.querySelector('.jump-title')) return;
+  
+  const span = document.createElement('span');
+  span.className = 'jump-title';
+  
+  while (summary.firstChild) {
+    span.appendChild(summary.firstChild);
+  }
+  summary.appendChild(span);
+});
+
+document.querySelectorAll('.player-jump, .box-jumps details').forEach(jump => {
+  if (jump.querySelector('video')) {
+    jump.classList.add('has-replay');
+  }
+});
+
+document.querySelectorAll('.player').forEach(player => {
+  const hasAnyVideo = player.querySelector('.player-jump video');
+  if (hasAnyVideo) {
+    const name = player.querySelector('.name');
+    if (name && !name.querySelector('.has-replays-icon')) {
+      const icon = document.createElement('span');
+      icon.className = 'has-replays-icon';
+      name.appendChild(icon);
+    }
+  }
 });
 </script>
 
